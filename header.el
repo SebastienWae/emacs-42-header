@@ -26,23 +26,7 @@
 ;                                                                              ;
 ;******************************************************************************;
 
-
-
-(global-set-key (kbd "C-c C-h") 'header-insert)
-(setq write-file-hooks (cons 'header-update write-file-hooks))
-
-
-(set 'user-login "suvitiel")
-
-
-
-
-(set 'user-mail (let ((mail (getenv "MAIL")))
-				   (if (string= mail nil)
-					   "suvitiel@student.42.fr"
-					 mail)
-				   )
-	 )
+(setq user-mail-42 (concat user-login-name "@student.42.fr"))
 
 
 (set 'left-std-margin 5)
@@ -101,20 +85,20 @@
 
 (defun header-make-by ()
   "Creates the 'By: login <mail>' entry of the header."
-  (let* ((mail-span (- info-std-width (+ (length user-login) 7)))
-		 (by (concat "By: " user-login " <" (header-chop-str user-mail mail-span) ">"))
+  (let* ((mail-span (- info-std-width (+ (length user-login-name) 7)))
+		 (by (concat "By: " user-login-name " <" (header-chop-str user-mail-42 mail-span) ">"))
 		 (fill (string-fill (- info-std-width (string-length by)))))
 	(concat by fill))
   )
 
 (defun header-make-creation-date ()
   "Creates the 'Created: yyyy/mm/dd hh:mm:ss' entry of the header.'"
-  (concat "Created: " (format-time-string "%Y/%m/%d %T") " by " user-login)
+  (concat "Created: " (format-time-string "%Y/%m/%d %T") " by " user-login-name)
   )
 
 (defun header-make-update-date ()
   "Creates the 'Updated: yyyy/mm/dd hh:mm:ss' entry of the header.'"
-  (concat "Updated: " (format-time-string "%Y/%m/%d %T") " by " user-login)
+  (concat "Updated: " (format-time-string "%Y/%m/%d %T") " by " user-login-name)
   )
 
 
